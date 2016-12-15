@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rosetown.dao.SMSPoolMapper" >
+	<!--  <cache type="com.jnlc.tools.admin.cache.MybatisRedisCache" /> -->
+  <resultMap id="BaseResultMap" type="com.rosetown.model.SMSPool" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="mobile" property="mobile" jdbcType="NVARCHAR" />
+    <result column="content" property="content" jdbcType="NVARCHAR" />
+    <result column="code" property="code"  jdbcType="NVARCHAR" />
+    <result column="createDate" property="createDate" jdbcType="TIMESTAMP" />
+       <result column="isCheck" property="isCheck"  jdbcType="BOOLEAN" />
+       <result column="isSend" property="isSend"  jdbcType="BOOLEAN" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, mobile,code,content,isCheck,isSend,createDate
+  </sql>
+  <select id="findById" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_SMSPool
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  
+  <update id="updateById" parameterType="com.rosetown.dao.SMSPoolMapper" >
+    update tb_SMSPool
+    set mobile = #{mobile,jdbcType=NVARCHAR},
+      code = #{code,jdbcType=NVARCHAR},
+      content = #{content,jdbcType=NVARCHAR},
+      isCheck = #{isCheck,jdbcType=BOOLEAN},
+      isSend = #{isSend,jdbcType=BOOLEAN}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.rosetown.dao.SMSPoolMapper" >
+    insert into tb_SMSPool (mobile,code, content,isCheck,isSend,createDate)
+    values (#{mobile,jdbcType=NVARCHAR},#{code,jdbcType=NVARCHAR},#{content,jdbcType=NVARCHAR}, #{isCheck,jdbcType=BOOLEAN},#{isSend,jdbcType=BOOLEAN},#{createDate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  
+ <delete id="deleteById" parameterType="java.lang.Long" >
+    delete from tb_SMSPool
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+</mapper>

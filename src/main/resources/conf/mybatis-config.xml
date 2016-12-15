@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<typeAliases>
+		<package name="com.rosetown.model"/>
+		<!-- <typeAlias alias="User"  type="com.jnlc.ssm.entity.User" /> -->
+	</typeAliases>
+	<!-- <typeHandlers>
+		<typeHandler javaType="Boolean" jdbcType="CHAR"    
+        handler="com.jnlc.ssm.mybatis.handler.BooleanTypeHandler"/>
+	</typeHandlers> -->
+	<mappers>
+	      <!-- <mapper resource="com/jnlc/mybatis/models/User.xml" /> 
+	     <package name="com.jnlc.mybatis.dao"/>   -->
+	</mappers>
+</configuration>

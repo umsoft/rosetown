@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rosetown.dao.UserDetailsMapper" >
+	<!--  <cache type="com.jnlc.tools.admin.cache.MybatisRedisCache" /> -->
+  <resultMap id="BaseResultMap" type="com.rosetown.model.UserDetails" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <id column="userId" property="userId" jdbcType="BIGINT" />
+    <result column="mobile" property="mobile" jdbcType="NVARCHAR" />
+    <result column="bankName" property="bankName"  jdbcType="NVARCHAR" />
+    <result column="bankNum" property="bankNum"  jdbcType="NVARCHAR" />
+    <result column="name" property="name"  jdbcType="NVARCHAR" />
+    <result column="isActivity" property="isActivity"  jdbcType="BOOLEAN" />
+    <result column="lastModify" property="lastModify" jdbcType="TIMESTAMP" />
+      <result column="parentId" property="parentId" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, userId,name,mobile,bankName,bankNum,parentId,isActivity,lastModify
+  </sql>
+  <select id="findById" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_UserDetails
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+   <select id="findByUserId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_UserDetails
+    where userId = #{userId,jdbcType=BIGINT}
+  </select>
+  <update id="updateById" parameterType="com.rosetown.model.UserDetails" >
+    update tb_UserDetails
+    set userId= #{userId,jdbcType=BIGINT},
+    	mobile = #{mobile,jdbcType=NVARCHAR},
+      name = #{name,jdbcType=NVARCHAR},
+      bankName = #{bankName,jdbcType=NVARCHAR},
+      bankNum = #{bankNum,jdbcType=NVARCHAR},
+      parentId = #{parentId,jdbcType=BIGINT},
+      isActivity = #{isActivity,jdbcType=BOOLEAN},
+      lastModify = #{lastModify,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <insert id="insert" parameterType="com.rosetown.model.UserDetails" >
+    insert into tb_UserDetails (userId,name,mobile,bankName,bankNum,parentId,isActivity,lastModify)
+    values (#{userId,jdbcType=BIGINT},
+    			 #{name,jdbcType=NVARCHAR},
+    			 #{mobile,jdbcType=NVARCHAR},
+    			 #{bankName,jdbcType=NVARCHAR},
+    			 #{bankNum,jdbcType=NVARCHAR},
+    			 #{parentId,jdbcType=BIGINT},
+    			 #{isActivity,jdbcType=BOOLEAN},
+    			  #{lastModify,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  
+ <delete id="deleteById" parameterType="java.lang.Long" >
+    delete from tb_UserDetails
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+</mapper>

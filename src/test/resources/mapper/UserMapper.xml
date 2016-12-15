@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rosetown.dao.UserMapper" >
+	<!--  <cache type="com.jnlc.tools.admin.cache.MybatisRedisCache" /> -->
+  <resultMap id="BaseResultMap" type="com.rosetown.model.User" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="userName" property="userName" jdbcType="NVARCHAR" />
+    <result column="mobile" property="mobile" jdbcType="NVARCHAR" />
+    <result column="password" property="password"  jdbcType="NVARCHAR" />
+    <result column="registerDate" property="registerDate" jdbcType="TIMESTAMP" />
+      <result column="lastLoginDate" property="lastLoginDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, userName,password,mobile,registerDate,lastLoginDate
+  </sql>
+  <select id="findById" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_User
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <!-- 检查系统中是否存在该用户;0:不存在；1：用户名已存在；2：手机号码已存在 -->
+  <select id="checkIsExist"  parameterType="Map" resultType="java.lang.Integer">
+    select count(0) 
+    from tb_User
+    where 1=1
+    <if test="mobile != null" >
+        and  mobile= #{mobile,jdbcType=NVARCHAR}
+      </if>
+       <if test="userName != null" >
+       and   userName= #{userName,jdbcType=NVARCHAR}
+      </if>
+  </select>
+  
+  <update id="updateById" parameterType="com.rosetown.model.User" >
+    update tb_User
+    set userName = #{userName,jdbcType=NVARCHAR},
+      password = #{password,jdbcType=NVARCHAR},
+      mobile = #{mobile,jdbcType=NVARCHAR},
+      registerDate = #{registerDate,jdbcType=TIMESTAMP},
+      lastLoginDate = #{lastLoginDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.rosetown.model.User" >
+    insert into tb_User (userName,password, mobile,registerDate)
+    values (#{userName,jdbcType=NVARCHAR},#{password,jdbcType=NVARCHAR},#{mobile,jdbcType=NVARCHAR}, #{registerDate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  
+ <delete id="deleteById" parameterType="java.lang.Long" >
+    delete from tb_User
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  
+  
+</mapper>
